@@ -26,13 +26,29 @@
               <tbody>
                 @foreach ($menus as $menu)
                 <tr>
-                  <td class="border px-4 py-2">
-                  @if ($loop->first)
-                    <input type="radio" name="menu_id" value="{{ $menu->id }}" checked>
+                  @if($check90 && !$check60 && !$check30 )
+                    @if($menu->id == 1 || $menu->id == 2 || $menu->id == 3 )
+                      <td class="border px-4 py-2">
+                        <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
+                      </td>                        
+                    @else
+                      <td class="border px-4 py-2">予約不可</td>
+                    @endif
+                  @elseif($check60 && $check90 &&  !$check30)
+                    @if($menu->id == 1)
+                      <td class="border px-4 py-2">
+                        <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
+                      </td>                        
+                    @else
+                      <td class="border px-4 py-2">予約不可</td>
+                    @endif
+                  @elseif($check30)
+                      <td class="border px-4 py-2">予約不可</td>
                   @else
-                    <input type="radio" name="menu_id" value="{{ $menu->id }}">
+                    <td class="border px-4 py-2">
+                     <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
+                    </td>
                   @endif
-                  </td>
                    <td class="border px-4 py-2">{{ $menu->name }}</td>
                    <td class="border px-4 py-2">{{ $menu->time }}</td>
                    <td class="border px-4 py-2">{{ $menu->price }}円</td>
