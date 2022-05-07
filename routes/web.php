@@ -17,30 +17,32 @@ use App\Http\Controllers\ReservationController;
 |
 */
 
-Route::group(['middleware' => 'auth'], function() {
+Route::middleware('can:user-higher')->group( function() {
     Route::controller(HomeController::class)->group (function () {
         //一覧画面表示
-        Route::get('/home', 'index')->name('index');
+        Route::get('/calendar', 'index')->name('index');
     });
     Route::controller(ReservationController::class)->group (function () {
-        Route::get('/reserve/{id}', 'show')->name('show');
-        Route::post('/reserve/store', 'store')->name('store');
+        Route::get('/calendar/{id}', 'show')->name('show');
+        Route::post('/calendar/store', 'store')->name('store');
     });
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
+
 
 Route::controller(LivewireTestController::class)->prefix('livewire-test')->group(function(){
     Route::get('/index', 'index');
 });
 
 
-
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

@@ -19,11 +19,11 @@ class UserSeeder extends Seeder
     {
         \DB::table('users')->insert([
             [
-                'name' => 'admin',
-                'email' => 'admin@example.com',
+                'name' => 'manager',
+                'email' => 'manager@example.com',
                 'email_verified_at' => now(),
-                'password' => \Hash::make('admin'),
-                'admin' => true,
+                'password' => \Hash::make('manager'),
+                'role' => 5,
                 'created_at' => now(),
                 'updated_at' => now()
             ],[
@@ -31,7 +31,15 @@ class UserSeeder extends Seeder
                 'email' => 'test@example.com',
                 'email_verified_at' => now(),
                 'password' => \Hash::make('test'),
-                'admin' => false,
+                'role' => 9,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],[
+                'name' => 'test2',
+                'email' => 'test2@example.com',
+                'email_verified_at' => now(),
+                'password' => \Hash::make('test2'),
+                'role' => 9,
                 'created_at' => now(),
                 'updated_at' => now()
             ]

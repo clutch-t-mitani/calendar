@@ -78,8 +78,7 @@ class ReservationController extends Controller
         $reserve->end_date = $end_time;
         $reserve->save();
 
-        return redirect('/home')->with('flash_message', '登録しました');
-        // return redirect('/home');
+        return redirect('/calendar')->with('flash_message', '登録しました');
 
     }
 }
