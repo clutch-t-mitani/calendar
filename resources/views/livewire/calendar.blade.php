@@ -1,10 +1,7 @@
 <div>
     <div class="text-center mb-4 mx-auto sm:px-6 lg:px-8">
-        日付を選択してください。本日より1週間先まで予約が可能です。
+        本日より1週間先まで予約が可能です。
     </div>
-    {{-- <input id="calendar" class="block mt-1 mb-2 mx-auto" type="text" name="calendar" 
-    value="{{ $currentDate }}" />  --}}
-
 
     <div class="flex border mx-auto">
      <x-calendar-time />
@@ -34,7 +31,7 @@
                         </div>
                     @endif
                 @else
-                 <div class="py-1 px-2 border  border-blue-200 text-center ">
+                 <div class="py-1 px-2 border  border-blue-200 text-center underline">
                     <a href="{{ route('show',['id' => $week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]]) }}">○</a>
                  </div>
                 @endif

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LivewireTestController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationManagementController;
 
 
 /*
@@ -29,6 +30,15 @@ Route::middleware('can:user-higher')->group( function() {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+
+Route::middleware('can:manager-higher')->group(function() {
+    Route::controller(ReservationManagementController::class)->group (function () {
+        //一覧画面表示
+        Route::get('/manager/index', 'index')->name('manager.index');
+        Route::post('/manager/delete', 'delete')->name('manager.delete');
+    });
 });
 
 

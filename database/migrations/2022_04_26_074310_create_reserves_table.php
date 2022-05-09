@@ -20,7 +20,6 @@ return new class extends Migration
             //timestampと書いてしまうと、レコード導入時更新に値が入らないので、DB::rawで直接かいてます。
             $table->datetime('start_date');
             $table->datetime('end_date');
-            $table->datetime('canceled_date')->nullable(); 
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             //論理削除を定義→deleted_atを自動生成　

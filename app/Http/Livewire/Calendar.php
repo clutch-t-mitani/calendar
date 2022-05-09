@@ -40,8 +40,7 @@ class Calendar extends Component
 
         //今週分の予約ID
         $this->reserved = Reserve::
-        whereNull('canceled_date')
-        ->whereBetween('start_date',[$this->today,$this->sevenDaysLater])
+        whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
 
         // dd($this->reserved);

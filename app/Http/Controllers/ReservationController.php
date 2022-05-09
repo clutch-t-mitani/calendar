@@ -19,7 +19,6 @@ class ReservationController extends Controller
         ->get();
 
         $reserved = Reserve::orderBy('start_date','ASC')
-        ->whereNull('canceled_date')
         ->get();
 
         $end_time30 = Carbon::parse($check_day)->addMinutes(30);
