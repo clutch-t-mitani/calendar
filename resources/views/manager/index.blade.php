@@ -48,7 +48,11 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
               <div class="p-6 bg-white border-b border-gray-200">
-                <h2 class="text-center py-2 text-lg">明日から今週の予約一覧 </h2>
+                {{-- <h2 class="text-center flex text-lg">明日から今週の予約一覧</h2>    --}}
+                <div class="flex justify-between">
+                  <h2 class="mb-4 ml-auto text-lg border-0 py-2 px-6 focus:outline-none">明日から今週の予約一覧</h2>
+                  <button onclick="location.href='{{ route('manager.past') }}'" class="mb-4 ml-auto text-white bg-indigo-500 border-0 py-2 px-1  hover:bg-indigo-600 font-semibold rounded ">過去の予約一覧へ</button>
+                </div>
                 <form action="{{ route('manager.delete') }}" method="POST">
                   @csrf
                 <table class="table-fixed">

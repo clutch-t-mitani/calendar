@@ -37,6 +37,7 @@ Route::middleware('can:manager-higher')->group(function() {
     Route::controller(ReservationManagementController::class)->group (function () {
         //一覧画面表示
         Route::get('/manager/index', 'index')->name('manager.index');
+        Route::get('/manager/past', 'past')->name('manager.past');
         Route::post('/manager/delete', 'delete')->name('manager.delete');
     });
 });
