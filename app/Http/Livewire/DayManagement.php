@@ -6,8 +6,7 @@ use Livewire\Component;
 use Carbon\CarbonImmutable;
 use App\Models\Reserve;
 
-
-class Calendar extends Component
+class DayManagement extends Component
 {
     //現在の日付
     public $today;
@@ -37,35 +36,16 @@ class Calendar extends Component
             );
         }
 
-
         //今週分の予約ID
         $this->reserved = Reserve::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
 
-        // dd($this->reserved);
+        // dd($this->week);
     }
-
-    // public function getDate($date)
-    // {
-    //     $this->currentDate = $date;
-    //     $this->currentWeek =  [];
-
-    //     for($i = 0; $i<7; $i++) {
-    //         $this->day = CarbonImmutable::parse($this->currentDate)->addDays($i)->format('m月d日');
-    //         array_push($this->currentWeek,$this->day);
-    //     }
-    // }
-
-    public function getWeekReserved()
-    {
-        $reserved = Reserve::get();
-        dd($reserved);
-    }
-
-
+    
     public function render()
     {
-        return view('livewire.calendar');
+        return view('livewire.day-management');
     }
 }

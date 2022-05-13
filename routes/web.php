@@ -39,6 +39,8 @@ Route::middleware('can:manager-higher')->group(function() {
         Route::get('/manager/index', 'index')->name('manager.index');
         Route::get('/manager/past', 'past')->name('manager.past');
         Route::post('/manager/delete', 'delete')->name('manager.delete');
+        Route::get('/manager/day_management/', 'day_management')->name('manager.day_management');
+        Route::post('/manager/reserve_stop', 'reserve_stop')->name('manager.reserve_stop');
     });
 });
 

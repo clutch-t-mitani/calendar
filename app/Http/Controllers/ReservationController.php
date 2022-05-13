@@ -42,10 +42,14 @@ class ReservationController extends Controller
         ->whereTime('end_date','>',$check_day)
         ->whereTime('start_date','<',$end_time90)
         ->exists();
-        
 
-        // dd($check30,$check60,$check90);
-        return view('reserve',['id' => $id],compact('day','menus','check_day','check30','check60','check90'));
+        $menus_time = [];
+        foreach($menus as $menu){
+            $menus_time[] = Carbon::parse($menu['time'])->isoFormat('H時間m分');
+        }
+        
+      
+        return view('reserve',['id' => $id],compact('day','menus','check_day','check30','check60','check90',));
     }
 
     public function store(Request $request)
@@ -78,6 +82,7 @@ class ReservationController extends Controller
         $reserve->save();
 
         return redirect('/calendar')->with('flash_message', '登録しました');
-
     }
+
+
 }

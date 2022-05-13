@@ -18,7 +18,7 @@
                 <tr>
                   <th class="px-4 py-2"></th>
                   <th class="px-4 py-2">メニュー名</th>
-                  <th class="px-4 py-2">所要時間</th>
+                  <th class="px-4 py-2">目安時間</th>
                   <th class="px-4 py-2">値段（税込）</th>
                   <th class="px-4 py-2">詳細</th>
                 </tr>
@@ -49,8 +49,12 @@
                      <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
                     </td>
                   @endif
+                  @php
+                    $date = new DateTime($menu['time']);
+                    $time = date_format($date,'G時間i分');
+                  @endphp
                    <td class="border px-4 py-2">{{ $menu->name }}</td>
-                   <td class="border px-4 py-2">{{ $menu->time }}</td>
+                   <td class="border px-4 py-2">{{ $time }}</td>
                    <td class="border px-4 py-2">{{ $menu->price }}円</td>
                    <td class="border px-4 py-2">{{ $menu->information }}</td>
                   </tr>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Reserve;
+use App\Models\ReserveStopDay;
 use Illuminate\Support\Facades\Auth; //ユーザID登録するために必要
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
@@ -61,6 +62,26 @@ class ReservationManagementController extends Controller
         // dd($past_reserves);
 
         return view('manager.past',compact('past_reserves'));
+    }
+
+    public function day_management()
+    {
+        return view('manager.day_management');
+    }
+
+    public function reserve_stop(Request $request)
+    {
+        $days = $request->all();
+        foreach($days['start_date'] as $day){
+            // dd($day,CarbonImmutable::parse($day)->addMinutes(30));
+            $stop_days = new ReserveStopDay();
+            $stop_days->start_date = $day;
+            $stop_days->end_date = CarbonImmutable::parse($day)->addMinutes(30);
+            $stop_days->save();
+        }
+
+        return redirect('/manager/day_management')->with('flash_message', '登録しました');
+        
     }
 
 }
