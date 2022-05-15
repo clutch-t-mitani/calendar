@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Carbon\CarbonImmutable;
 use App\Models\Reserve;
-
+use App\Models\ReserveStopDay;
 
 class Calendar extends Component
 {
@@ -17,6 +17,7 @@ class Calendar extends Component
     public $dayOfWeek;
     public $sevenDaysLater;
     public $reserved;
+    public $stop_days;
 
     //画面を読み込んだときの初期値
     public function mount()
@@ -43,7 +44,13 @@ class Calendar extends Component
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
 
-        // dd($this->reserved);
+        
+        $this->stop_days = ReserveStopDay::
+        whereBetween('start_date',[$this->today,$this->sevenDaysLater])
+        ->whereNull('deleted_at')
+        ->get();
+
+
     }
 
     // public function getDate($date)

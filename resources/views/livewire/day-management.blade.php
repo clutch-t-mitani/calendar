@@ -15,8 +15,9 @@
                 @for($j = 0; $j < 21; $j++)
                     @php
                       $reserveInfo = $reserved->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
+                      $stopDaysInfo = $stop_days->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
                     @endphp
-                    @if($reserved->isNotEmpty()) {{--空でなかったらTrue--}}
+                    @if($reserved->isNotEmpty() || $stop_days->isNotEmpty()) {{--空でなかったらTrue--}}
                         @if(!is_null($reserveInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                 @if($reserveInfo->menu_id == 2 || $reserveInfo->menu_id == 3 )
@@ -28,8 +29,12 @@
                                     <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                     @php $j += 2; @endphp 
                                 @endif                            
+                        @elseif(!is_null($stopDaysInfo))
+                            <div class="py-1 px-2 border border-blue-200 text-center underline">
+                                <a href="">受付停止中</a>    
+                            </div>
                         @else
-                            <div class="py-1 px-2 border  border-blue-200 text-center underline">
+                            <div class="py-1 px-2 border  border-blue-200 text-center ">
                                 {{-- <a href="{{ route('show',['id' => $week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]]) }}">○</a> --}}
                                 <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" >
                             </div>

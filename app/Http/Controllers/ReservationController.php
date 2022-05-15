@@ -43,13 +43,33 @@ class ReservationController extends Controller
         ->whereTime('start_date','<',$end_time90)
         ->exists();
 
+        $check_stop_days30 = DB::table('reserve_stop_days')
+        ->whereDate('start_date',$check_day)
+        ->whereTime('end_date','>',$check_day)
+        ->whereTime('start_date','<',$end_time30)
+        ->exists();
+
+        $check_stop_days60 = DB::table('reserve_stop_days')
+        ->whereDate('start_date',$check_day)
+        ->whereTime('end_date','>',$check_day)
+        ->whereTime('start_date','<',$end_time60)
+        ->exists();
+
+        $check_stop_days90 = DB::table('reserve_stop_days')
+        ->whereDate('start_date',$check_day)
+        ->whereTime('end_date','>',$check_day)
+        ->whereTime('start_date','<',$end_time90)
+        ->exists();
+
+
         $menus_time = [];
         foreach($menus as $menu){
             $menus_time[] = Carbon::parse($menu['time'])->isoFormat('H時間m分');
         }
         
-      
-        return view('reserve',['id' => $id],compact('day','menus','check_day','check30','check60','check90',));
+        // dd($reserved);
+        return view('reserve',['id' => $id],
+        compact('day','menus','check_day','check30','check60','check90','check_stop_days30','check_stop_days60','check_stop_days90'));
     }
 
     public function store(Request $request)

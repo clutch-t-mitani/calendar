@@ -713,9 +713,6 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
 .block {
   display: block;
 }
@@ -1023,13 +1020,13 @@ select {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .pt-6 {
   padding-top: 1.5rem;
