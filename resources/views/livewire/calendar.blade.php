@@ -27,7 +27,7 @@
                                 @php $j += 2; @endphp 
                             @endif                            
                     @elseif(!is_null($stopDaysInfo))
-                            <div class="py-1 px-2 border border-blue-200 text-center">受付停止中</div>
+                            <div class="py-1 px-2 border border-blue-200 text-center ">受付不可</div>
                     @else
                         <div class="py-1 px-2 border  border-blue-200 text-center underline">
                             <a href="{{ route('show',['id' => $week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]]) }}">○</a>

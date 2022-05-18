@@ -30,8 +30,8 @@
                                     @php $j += 2; @endphp 
                                 @endif                            
                         @elseif(!is_null($stopDaysInfo))
-                            <div class="py-1 px-2 border border-blue-200 text-center underline">
-                                <a href="">受付停止中</a>    
+                            <div class="py-1 px-2 border border-blue-200 text-center">
+                                <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" checked>
                             </div>
                         @else
                             <div class="py-1 px-2 border  border-blue-200 text-center ">

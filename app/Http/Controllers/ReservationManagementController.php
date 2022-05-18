@@ -72,13 +72,19 @@ class ReservationManagementController extends Controller
     public function reserve_stop(Request $request)
     {
         $days = $request->all();
-        foreach($days['start_date'] as $day){
-            // dd($day,CarbonImmutable::parse($day)->addMinutes(30));
-            $stop_days = new ReserveStopDay();
-            $stop_days->start_date = $day;
-            $stop_days->end_date = CarbonImmutable::parse($day)->addMinutes(30);
-            $stop_days->save();
-        }
+        // dd($days);
+        DB::transaction(function() use($days){
+           
+            ReserveStopDay::query()->delete();
+
+            foreach($days['start_date'] as $day){
+                // dd($day,CarbonImmutable::parse($day)->addMinutes(30));
+                $stop_days = new ReserveStopDay();
+                $stop_days->start_date = $day;
+                $stop_days->end_date = CarbonImmutable::parse($day)->addMinutes(30);
+                $stop_days->save();
+            }
+        });
 
         return redirect('/manager/day_management')->with('flash_message', '登録しました');
         

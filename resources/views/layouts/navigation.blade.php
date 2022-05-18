@@ -28,6 +28,13 @@
                     </x-nav-link>
                 </div>
                 @endcan
+                @can('manager-higher')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('manager.day_management')" :active="request()->routeIs('manager.day_management')">
+                        {{ __('休日登録') }}
+                    </x-nav-link>
+                </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
@@ -81,6 +88,9 @@
             @can('manager-higher')
             <x-responsive-nav-link :href="route('manager.index')" :active="request()->routeIs('manager.index')">
                 {{ __('予約管理画面') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('manager.day_management')" :active="request()->routeIs('manager.day_management')">
+                {{ __('休日登録') }}
             </x-responsive-nav-link>
             @endcan
         </div>

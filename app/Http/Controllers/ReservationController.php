@@ -89,8 +89,14 @@ class ReservationController extends Controller
         ->whereTime('end_date','>',$start_time)
         ->whereTime('start_date','<',$end_time)
         ->exists();
+
+        $check_stop_days = DB::table('reserve_stop_days')
+        ->whereDate('start_date',$start_time)
+        ->whereTime('end_date','>',$start_time)
+        ->whereTime('start_date','<',$end_time)
+        ->exists();
         
-        if($check){
+        if($check || $check_stop_days){
             session()->flash('statsu','この時間にこのメニューは予約できません');
             return back();
         }
