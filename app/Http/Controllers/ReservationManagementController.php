@@ -24,6 +24,7 @@ class ReservationManagementController extends Controller
         ->select('reserves.id', 'reserves.start_date', 'reserves.end_date','users.name as user_name','users.email','menus.name as menu_name','menus.price')
         ->leftJoin('users','user_id','=','users.id')
         ->whereDate('start_date',$today)
+        ->orderBy('start_date','ASC')
         ->get();
 
         //明日から今週いっぱいのイベント
