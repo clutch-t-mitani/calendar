@@ -56,8 +56,12 @@
                     </thead>
                     <tbody>
                       @foreach($today_reserves as $today_reserve)
+                      @php
+                        $date = new DateTime($today_reserve->start_date);
+                        $start_time = date_format($date,'m月d日  G:i');
+                      @endphp
                       <tr>
-                        <td class="border px-4 py-2">{{ $today_reserve->start_date }}</td>
+                        <td class="border px-4 py-2">{{ $start_time }}</td>
                         <td class="border px-4 py-2">{{ $today_reserve->menu_name }}</td>
                         <td class="border px-4 py-2">{{ $today_reserve->price }}</td>
                         <td class="border px-4 py-2">{{ $today_reserve->user_name }}</td>
@@ -100,8 +104,12 @@
                   </thead>
                   <tbody>
                     @foreach($week_reserves as $week_reserve)
+                    @php
+                      $date = new DateTime($week_reserve->start_date);
+                      $start_time = date_format($date,'m月d日  G:i');
+                    @endphp
                     <tr>
-                      <td class="border px-4 py-2">{{ $week_reserve->start_date }}</td>
+                      <td class="border px-4 py-2">{{ $start_time }}</td>
                       <td class="border px-4 py-2">{{ $week_reserve->menu_name }}</td>
                       <td class="border px-4 py-2">{{ $week_reserve->price }}</td>
                       <td class="border px-4 py-2">{{ $week_reserve->user_name }}</td>

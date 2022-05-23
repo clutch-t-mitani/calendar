@@ -21,14 +21,20 @@
                         @if(!is_null($reserveInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                 @if($reserveInfo->menu_id == 2 || $reserveInfo->menu_id == 3 )
-                                    <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
+                                    @if($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:30:00' )
+                                     <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
+                                    @endif
                                     @php $j += 1; @endphp 
                                 @endif
                                 @if($reserveInfo->menu_id == 4 )
-                                    <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
-                                    <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
-                                    @php $j += 2; @endphp 
-                                @endif                            
+                                    @if($reserveInfo->start_date == $week[$i]['checkDay']." ".'19:30:00' )
+                                        <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
+                                    @elseif($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:00:00' )
+                                        <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
+                                        <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
+                                    @endif
+                                @php $j += 2; @endphp 
+                            @endif                            
                         @elseif(!is_null($stopDaysInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center">
                                 <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" checked>

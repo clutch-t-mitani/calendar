@@ -35,7 +35,9 @@ class ReservationManagementController extends Controller
         ->orderBy('start_date','ASC')
         ->get();
 
-        return view('manager.index',compact('today_reserves','week_reserves','view_today'));
+        $day_of_week = ['日','月','火','水','木','金','土'];
+
+        return view('manager.index',compact('today_reserves','week_reserves','view_today','day_of_week'));
     }
 
     //予約キャンセル

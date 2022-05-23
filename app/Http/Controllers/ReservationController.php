@@ -25,51 +25,26 @@ class ReservationController extends Controller
         $end_time60 = Carbon::parse($check_day)->addMinutes(60);
         $end_time90 = Carbon::parse($check_day)->addMinutes(90);
 
-        $check30 = DB::table('reserves')
-        ->whereDate('start_date',$check_day)
-        ->whereTime('end_date','>',$check_day)
-        ->whereTime('start_date','<',$end_time30)
-        ->exists();
-
-        $check60 = DB::table('reserves')
-        ->whereDate('start_date',$check_day)
-        ->whereTime('end_date','>',$check_day)
-        ->whereTime('start_date','<',$end_time60)
-        ->exists();
+        $check_time = new Reserve;
+        $check30 = $check_time->check_time('reserves',$check_day,$end_time30);
+        $check60 = $check_time->check_time('reserves',$check_day,$end_time60);
+        $check90 = $check_time->check_time('reserves',$check_day,$end_time90);
+        $check_stop_days30 = $check_time->check_time('reserve_stop_days',$check_day,$end_time30);
+        $check_stop_days60 = $check_time->check_time('reserve_stop_days',$check_day,$end_time60);
+        $check_stop_days90 = $check_time->check_time('reserve_stop_days',$check_day,$end_time90);
         
-        $check90 = DB::table('reserves')
-        ->whereDate('start_date',$check_day)
-        ->whereTime('end_date','>',$check_day)
-        ->whereTime('start_date','<',$end_time90)
-        ->exists();
-
-        $check_stop_days30 = DB::table('reserve_stop_days')
-        ->whereDate('start_date',$check_day)
-        ->whereTime('end_date','>',$check_day)
-        ->whereTime('start_date','<',$end_time30)
-        ->exists();
-
-        $check_stop_days60 = DB::table('reserve_stop_days')
-        ->whereDate('start_date',$check_day)
-        ->whereTime('end_date','>',$check_day)
-        ->whereTime('start_date','<',$end_time60)
-        ->exists();
-
-        $check_stop_days90 = DB::table('reserve_stop_days')
-        ->whereDate('start_date',$check_day)
-        ->whereTime('end_date','>',$check_day)
-        ->whereTime('start_date','<',$end_time90)
-        ->exists();
-
-
-        $menus_time = [];
-        foreach($menus as $menu){
-            $menus_time[] = Carbon::parse($menu['time'])->isoFormat('H時間m分');
+        if(!$check30 && $check_stop_days30){
+            $check30 = true;
         }
-        
-        // dd($reserved);
+        if(!$check60 && $check_stop_days60){
+            $check60 = true;
+        }
+        if(!$check90 && $check_stop_days90){
+            $check90 = true;
+        }
+        // dd($check30,$check60,$check90,$check_stop_days30,$check_stop_days60,$check_stop_days90);
         return view('reserve',['id' => $id],
-        compact('day','menus','check_day','check30','check60','check90','check_stop_days30','check_stop_days60','check_stop_days90'));
+        compact('day','menus','check_day','check30','check60','check90'));
     }
 
     public function store(Request $request)
@@ -84,22 +59,15 @@ class ReservationController extends Controller
             $end_time = Carbon::parse($start_time)->addMinutes(90);
         }
 
-        $check = DB::table('reserves')
-        ->whereDate('start_date',$start_time)
-        ->whereTime('end_date','>',$start_time)
-        ->whereTime('start_date','<',$end_time)
-        ->exists();
-
-        $check_stop_days = DB::table('reserve_stop_days')
-        ->whereDate('start_date',$start_time)
-        ->whereTime('end_date','>',$start_time)
-        ->whereTime('start_date','<',$end_time)
-        ->exists();
+        $check_time = new Reserve;
+        $check = $check_time->check_time('reserves',$start_time,$end_time);
+        $check_stop_days = $check_time->check_time('reserve_stop_days',$start_time,$end_time);
         
         if($check || $check_stop_days){
             session()->flash('statsu','この時間にこのメニューは予約できません');
             return back();
         }
+
         $reserve = new Reserve();
         $reserve->user_id = Auth::id();
         $reserve->menu_id = $request->menu_id;
@@ -107,7 +75,7 @@ class ReservationController extends Controller
         $reserve->end_date = $end_time;
         $reserve->save();
 
-        return redirect('/calendar')->with('flash_message', '登録しました');
+        return redirect('/')->with('flash_message', '登録しました');
     }
 
 

@@ -46,10 +46,14 @@
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
-
                 <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
+            </div>
+            <div class="flex items-center justify-end mt-2">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 text-right" href="{{ route('register') }}">
+                    未登録の方はこちら
+                </a>
             </div>
         </form>
     </x-auth-card>

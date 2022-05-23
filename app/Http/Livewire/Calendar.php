@@ -38,31 +38,19 @@ class Calendar extends Component
             );
         }
 
-
         //今週分の予約ID
         $this->reserved = Reserve::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
 
-        
+        // dd($this->reserved);
+    
         $this->stop_days = ReserveStopDay::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
-        ->whereNull('deleted_at')
         ->get();
 
-
     }
-
-    // public function getDate($date)
-    // {
-    //     $this->currentDate = $date;
-    //     $this->currentWeek =  [];
-
-    //     for($i = 0; $i<7; $i++) {
-    //         $this->day = CarbonImmutable::parse($this->currentDate)->addDays($i)->format('m月d日');
-    //         array_push($this->currentWeek,$this->day);
-    //     }
-    // }
+    
 
     public function getWeekReserved()
     {

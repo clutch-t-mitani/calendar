@@ -23,8 +23,12 @@
                   </thead>
                   <tbody>
                     @foreach($past_reserves as $past_reserve)
+                    @php
+                      $date = new DateTime($past_reserve->start_date);
+                      $start_time = date_format($date,'m月d日  G:i');
+                    @endphp
                     <tr>
-                      <td class="border px-4 py-2">{{ $past_reserve->start_date }}</td>
+                      <td class="border px-4 py-2">{{ $start_time }}</td>
                       <td class="border px-4 py-2">{{ $past_reserve->menu_name }}</td>
                       <td class="border px-4 py-2">{{ $past_reserve->price }}</td>
                       <td class="border px-4 py-2">{{ $past_reserve->user_name }}</td>
