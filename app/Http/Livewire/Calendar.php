@@ -6,6 +6,7 @@ use Livewire\Component;
 use Carbon\CarbonImmutable;
 use App\Models\Reserve;
 use App\Models\ReserveStopDay;
+use App\Constants\ReserveConst;
 
 class Calendar extends Component
 {
@@ -18,6 +19,8 @@ class Calendar extends Component
     public $sevenDaysLater;
     public $reserved;
     public $stop_days;
+    public $checkTime;
+
 
     //画面を読み込んだときの初期値
     public function mount()
@@ -38,13 +41,28 @@ class Calendar extends Component
             );
         }
 
+        // dd( $this->week );
         //今週分の予約ID
         $this->reserved = Reserve::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
+        // dd($this->week);
 
-        // dd($this->reserved);
-    
+        // $reserveInfo = $reserved->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
+        // $stopDaysInfo = $stop_days->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
+
+        $this->checkTimes = [];
+        for($i = 0; $i < 7; $i++){
+            for($j =0; $j < 21; $j++){
+                if (!array_key_exists($this->week[$i]['checkDay'],$this->checkTimes)) {
+                    $this->checkTimes[$this->week[$i]['checkDay']] = [];
+                }
+                $this->checkTimes[$this->week[$i]['checkDay']][] = $this->week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j];
+            }
+        }
+
+        // dd($this->checkTimes);
+
         $this->stop_days = ReserveStopDay::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();

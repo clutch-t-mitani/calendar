@@ -6,7 +6,7 @@
 
     <div class="flex border mx-auto">
      <x-calendar-time />
-      @for($i = 0; $i < 7; $i++)
+     @for($i = 0; $i < 7; $i++)
         <div class="w-32">
             <div class="py-1 px-2 border border-gray-200 text-center bg-blue-200 ">{{ $week[$i]['day'] }}</div>
             <div class="py-1 px-2 border border-gray-200 text-center">{{ $week[$i]['dayOfWeek'] }}</div>
@@ -21,8 +21,8 @@
                             @if($reserveInfo->menu_id == 2 || $reserveInfo->menu_id == 3 )
                               @if($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:30:00' )
                                 <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">×</div>
-                              @endif
                                 @php $j += 1; @endphp 
+                              @endif  
                             @endif
                             @if($reserveInfo->menu_id == 4 )
                                 @if($reserveInfo->start_date == $week[$i]['checkDay']." ".'19:30:00' )
