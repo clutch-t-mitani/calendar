@@ -3,7 +3,6 @@
     <div class="text-center mb-4 mx-auto sm:px-6 lg:px-8">
         本日より1週間先まで予約が可能です。
     </div>
-
     <div class="flex border mx-auto">
      <x-calendar-time />
      @for($i = 0; $i < 7; $i++)
@@ -12,7 +11,9 @@
             <div class="py-1 px-2 border border-gray-200 text-center">{{ $week[$i]['dayOfWeek'] }}</div>
             @for($j = 0; $j < 21; $j++)
                 @php
+                  //予定が入っているか確認
                   $reserveInfo = $reserved->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
+                  //受付停止になっていないか確認
                   $stopDaysInfo = $stop_days->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
                @endphp
                 @if($reserved->isNotEmpty()  || $stop_days->isNotEmpty()) {{--空でなかったらTrue--}}

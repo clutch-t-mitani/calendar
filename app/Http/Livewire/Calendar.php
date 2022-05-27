@@ -61,7 +61,7 @@ class Calendar extends Component
             }
         }
 
-        dd($this->checkTimes);
+        // dd($this->checkTimes);
 
         $this->stop_days = ReserveStopDay::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
