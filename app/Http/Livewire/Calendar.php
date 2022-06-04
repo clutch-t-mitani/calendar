@@ -41,16 +41,11 @@ class Calendar extends Component
             );
         }
 
-        // dd( $this->week );
         //今週分の予約ID
         $this->reserved = Reserve::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
-        // dd($this->week);
-
-        // $reserveInfo = $reserved->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
-        // $stopDaysInfo = $stop_days->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
-
+      
         $this->checkTimes = [];
         for($i = 0; $i < 7; $i++){
             for($j =0; $j < 21; $j++){
@@ -60,8 +55,6 @@ class Calendar extends Component
                 $this->checkTimes[$this->week[$i]['checkDay']][] = $this->week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j];
             }
         }
-
-        // dd($this->checkTimes);
 
         $this->stop_days = ReserveStopDay::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])

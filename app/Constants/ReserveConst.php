@@ -27,4 +27,9 @@ class ReserveConst
     '19:30:00',
     '20:00:00',
   ];
+  
+  const CUT = 1;
+  const CUT_SHAMPOO = 2;
+  const CUT_SHAVING = 3;
+  const CUT_CUT_SHAMPOO_SHAVING = 4;
 }

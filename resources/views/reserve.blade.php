@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('Dashboard') }}
+          予約画面
       </h2>
   </x-slot>
 
@@ -27,7 +27,7 @@
                 @foreach ($menus as $menu)
                 <tr>
                   @if($check90 && !$check60 && !$check30)
-                    @if($menu->id == 1 || $menu->id == 2 || $menu->id == 3 )
+                    @if($menu->id == \Constant::CUT || $menu->id == \Constant::CUT_SHAMPOO || $menu->id == \Constant::CUT_SHAVING )
                       <td class="border px-4 py-2">
                         <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
                       </td>                        
@@ -35,9 +35,9 @@
                       <td class="border px-4 py-2">予約不可</td>
                     @endif
                   @elseif($check60 && $check90 && !$check30)
-                    @if($menu->id == 1)
+                    @if($menu->id == \Constant::CUT)
                       <td class="border px-4 py-2">
-                        <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
+                        <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == \Constant::CUT)checked @endif>
                       </td>                        
                     @else
                       <td class="border px-4 py-2">予約不可</td>
@@ -46,7 +46,7 @@
                       <td class="border px-4 py-2">予約不可</td>
                   @else
                     <td class="border px-4 py-2">
-                     <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == 1)checked @endif>
+                     <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == \Constant::CUT)checked @endif>
                     </td>
                   @endif
                   @php

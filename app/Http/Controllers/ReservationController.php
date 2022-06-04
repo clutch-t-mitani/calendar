@@ -42,7 +42,6 @@ class ReservationController extends Controller
         if(!$check90 && $check_stop_days90){
             $check90 = true;
         }
-        // dd($check30,$check60,$check90,$check_stop_days30,$check_stop_days60,$check_stop_days90);
         return view('reserve',['id' => $id],
         compact('day','menus','check_day','check30','check60','check90'));
     }
