@@ -4,38 +4,7 @@
           予約管理画面
       </h2>
   </x-slot>
-  <script>
-    function isCheck() {
-      var arr_checkBoxes = document.getElementsByClassName("check");
-      var count = 0;
-      for (var i = 0; i < arr_checkBoxes.length; i++) {
-          if (arr_checkBoxes[i].checked) {
-              count++;
-          }
-      }
-      if (count > 0) {
-          return true;
-      } else {
-          window.alert("1つ以上選択してください。");
-          return false;
-      };
-   }
-    function isCheckWeek() {
-      var arr_checkBoxes = document.getElementsByClassName("check_week");
-      var count = 0;
-      for (var i = 0; i < arr_checkBoxes.length; i++) {
-          if (arr_checkBoxes[i].checked) {
-              count++;
-          }
-      }
-      if (count > 0) {
-          return true;
-      } else {
-          window.alert("1つ以上選択してください。");
-          return false;
-      };
-   }
-  </script>
+
   <div class="py-8">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -72,7 +41,7 @@
                     </tbody>
                   </table>
                   <div class="m-3 flex flex-row-reverse">
-                    <button type="submit" onClick="return isCheck()" class="px-2 py-1 bg-red-400 text-base text-white font-semibold rounded hover:bg-red-500">予約をキャンセル</button>
+                    <button type="submit" onClick="return isCheck();return false;" class="px-2 py-1 bg-red-400 text-base text-white font-semibold rounded hover:bg-red-500">予約をキャンセル</button>
                   </div>        
                 </form>
               </div>
@@ -84,7 +53,6 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
               <div class="p-6 bg-white border-b border-gray-200">
-                {{-- <h2 class="text-center flex text-lg">明日から今週の予約一覧</h2>    --}}
                 <div class="flex justify-between">
                   <h2 class="mb-4 ml-auto text-lg border-0 py-2 px-6 focus:outline-none">明日から今週の予約一覧</h2>
                   <button onclick="location.href='{{ route('manager.past') }}'" class="mb-4 ml-auto text-white bg-indigo-500 border-0 py-2 px-1  hover:bg-indigo-600 font-semibold rounded ">過去の予約一覧へ</button>
@@ -120,7 +88,7 @@
                  </tbody>
                 </table>
                 <div class="m-3 flex flex-row-reverse">
-                  <button type="submit"  onClick="return isCheckWeek()" class="px-2 py-1 bg-red-400 text-base text-white font-semibold rounded hover:bg-red-500 ">予約をキャンセル</button>
+                  <button type="submit"  onClick="return isCheckWeek();return false;" class="px-2 py-1 bg-red-400 text-base text-white font-semibold rounded hover:bg-red-500 ">予約をキャンセル</button>
                 </div>        
               </form>
               </div>
@@ -128,3 +96,45 @@
       </div>
   </div>
 </x-app-layout>
+<script>
+  function isCheck(e) {
+    var arr_checkBoxes = document.getElementsByClassName("check");
+    var count = 0;
+    for (var i = 0; i < arr_checkBoxes.length; i++) {
+        if (arr_checkBoxes[i].checked) {
+            count++;
+        }
+    }
+    if (count > 0) {
+      if(window.confirm('選択した予約をキャンセルしますか？')){ 
+        window.alert('キャンセルされました'); 
+        return true; 
+      }else{ 
+        return false; 
+      } 
+    } else {
+        window.alert("1つ以上選択してください。");
+        return false;
+    };
+ }
+  function isCheckWeek() {
+    var arr_checkBoxes = document.getElementsByClassName("check_week");
+    var count = 0;
+    for (var i = 0; i < arr_checkBoxes.length; i++) {
+        if (arr_checkBoxes[i].checked) {
+            count++;
+        }
+    }
+    if (count > 0) {
+      if(window.confirm('選択した予約をキャンセルしますか？')){ 
+        window.alert('キャンセルされました'); 
+        return true; 
+      }else{ 
+        return false; 
+      } 
+    } else {
+        window.alert("1つ以上選択してください。");
+        return false;
+    };
+ }
+</script>
