@@ -63,7 +63,7 @@
             </table>  
             <input type="hidden" name="time" value={{ str_replace(' ', '/', $check_day) }} >
             <div class="m-3 flex flex-row-reverse">
-              <button type="submit" class="px-2 py-1 bg-blue-400 text-base text-white font-semibold rounded hover:bg-blue-500 ">予約する</button>
+              <button type="submit" onClick="return isCheck()" class="px-2 py-1 bg-blue-400 text-base text-white font-semibold rounded hover:bg-blue-500 ">予約する</button>
             </div>        
           </form>
         </div>
@@ -72,3 +72,16 @@
   </div>
 </div>
 </x-app-layout>
+
+<script>
+  function isCheck() {
+      var arr_checkBoxes = document.getElementsByClassName("check");
+
+      if(window.confirm('予約を決定しますか？')){ 
+          window.alert('予約を受け付けました'); 
+          return true; 
+      }else{ 
+          return false; 
+      } 
+  }
+</script>

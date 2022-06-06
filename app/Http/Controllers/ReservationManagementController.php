@@ -49,7 +49,7 @@ class ReservationManagementController extends Controller
         foreach($cancel_ids as $cancel_id){
          Reserve::where('id',$cancel_id)->delete();
         }
-        return back()->with('flash_message', '更新しました');
+        return back();
     }
 
     public function past()
@@ -62,7 +62,6 @@ class ReservationManagementController extends Controller
         ->whereDate('start_date','<',$today)
         ->orderBy('start_date','desc')
         ->paginate(10);
-        // dd($past_reserves);
 
         return view('manager.past',compact('past_reserves'));
     }
@@ -75,22 +74,20 @@ class ReservationManagementController extends Controller
     public function reserve_stop(Request $request)
     {
         $days = $request->all();
-        // dd($days);
-        DB::transaction(function() use($days){
-           
+        if(empty($days['start_date'])){
             ReserveStopDay::query()->delete();
-
-            foreach($days['start_date'] as $day){
-                // dd($day,CarbonImmutable::parse($day)->addMinutes(30));
-                $stop_days = new ReserveStopDay();
-                $stop_days->start_date = $day;
-                $stop_days->end_date = CarbonImmutable::parse($day)->addMinutes(30);
-                $stop_days->save();
-            }
-        });
-
-        return redirect('/manager/day_management')->with('flash_message', '登録しました');
-        
+        }else{
+            DB::transaction(function() use($days){
+                ReserveStopDay::query()->delete();
+                foreach($days['start_date'] as $day){
+                    // dd($day,CarbonImmutable::parse($day)->addMinutes(30));
+                    $stop_days = new ReserveStopDay();
+                    $stop_days->start_date = $day;
+                    $stop_days->end_date = CarbonImmutable::parse($day)->addMinutes(30);
+                    $stop_days->save();
+                }
+            });
+        }
+        return redirect('/manager/day_management');   
     }
-
 }

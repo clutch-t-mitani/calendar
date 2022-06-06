@@ -97,7 +97,7 @@
   </div>
 </x-app-layout>
 <script>
-  function isCheck(e) {
+  function isCheck() {
     var arr_checkBoxes = document.getElementsByClassName("check");
     var count = 0;
     for (var i = 0; i < arr_checkBoxes.length; i++) {

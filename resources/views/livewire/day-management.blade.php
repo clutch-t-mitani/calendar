@@ -2,7 +2,7 @@
     <form action="{{ route('manager.reserve_stop') }}" method="POST">
     @csrf
         <div class="text-center mb-4 mx-auto sm:px-6 lg:px-8">
-        <button type="submit" class="px-2 py-1 bg-red-400 text-base 
+        <button type="submit" onClick="return isCheck()" class="px-2 py-1 bg-red-400 text-base 
          text-white font-semibold rounded hover:bg-red-500 ">チェックした日時を予約停止にする</button>
         </div>
     
@@ -41,13 +41,11 @@
                             </div>
                         @else
                             <div class="py-1 px-2 border  border-blue-200 text-center ">
-                                {{-- <a href="{{ route('show',['id' => $week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]]) }}">○</a> --}}
                                 <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" >
                             </div>
                         @endif
                     @else
                         <div class="py-1 px-2 border  border-blue-200 text-center underline">
-                            {{-- <a href="{{ route('show',['id' => $week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]]) }}">○</a> --}}
                             <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" >
                         </div>
                     @endif
@@ -57,3 +55,16 @@
         </div>
     </form>
 </div>
+
+<script>
+    function isCheck() {
+        var arr_checkBoxes = document.getElementsByClassName("check");
+
+        if(window.confirm('受付停止日時更新しますか？')){ 
+            window.alert('更新しました'); 
+            return true; 
+        }else{ 
+            return false; 
+        } 
+    }
+</script>
