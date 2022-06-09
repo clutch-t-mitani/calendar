@@ -20,13 +20,13 @@
                     @if($reserved->isNotEmpty() || $stop_days->isNotEmpty()) {{--空でなかったらTrue--}}
                         @if(!is_null($reserveInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
-                                @if($reserveInfo->menu_id == 2 || $reserveInfo->menu_id == 3 )
+                                @if($reserveInfo->menu_id ==  \Constant::CUT_SHAMPOO || $reserveInfo->menu_id ==  \Constant::CUT_SHAVING )
                                     @if($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:30:00' )
                                      <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                     @endif
                                     @php $j += 1; @endphp 
                                 @endif
-                                @if($reserveInfo->menu_id == 4 )
+                                @if($reserveInfo->menu_id == \Constant::CUT_SHAMPOO_SHAVING )
                                     @if($reserveInfo->start_date == $week[$i]['checkDay']." ".'19:30:00' )
                                         <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                     @elseif($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:00:00' )

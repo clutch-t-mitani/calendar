@@ -31,5 +31,5 @@ class ReserveConst
   const CUT = 1;
   const CUT_SHAMPOO = 2;
   const CUT_SHAVING = 3;
-  const CUT_CUT_SHAMPOO_SHAVING = 4;
+  const CUT_SHAMPOO_SHAVING = 4;
 }
