@@ -54,8 +54,8 @@ class DayManagement extends Component
 
         $this->weekCheckDays = [];
         for($i = 0; $i < 7; $i++){
-            $this->weekCheckDays[$i] += $this->week[$i];
             $this->weekCheckDays[$i]['checkDayTme'] =  $this->checkTimes[$i];
+            $this->weekCheckDays[$i] += $this->week[$i];
         }
 
         $this->stop_days = ReserveStopDay::
