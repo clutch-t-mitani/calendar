@@ -10,26 +10,26 @@
          <x-calendar-time />
           @for($i = 0; $i < 7; $i++)
             <div class="w-32">
-                <div class="py-1 px-2 border border-gray-200 text-center bg-blue-200 ">{{ $week[$i]['day'] }}</div>
-                <div class="py-1 px-2 border border-gray-200 text-center">{{ $week[$i]['dayOfWeek'] }}</div>
+                <div class="py-1 px-2 border border-gray-200 text-center bg-blue-200 ">{{ $weekCheckDays[$i]['day'] }}</div>
+                <div class="py-1 px-2 border border-gray-200 text-center">{{ $weekCheckDays[$i]['dayOfWeek'] }}</div>
                 @for($j = 0; $j < 21; $j++)
                     @php
-                      $reserveInfo = $reserved->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
-                      $stopDaysInfo = $stop_days->firstWhere('start_date',$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]);
+                      $reserveInfo = $reserved->firstWhere('start_date',$weekCheckDays[$i]['checkDayTme'][$j]);
+                      $stopDaysInfo = $stop_days->firstWhere('start_date',$weekCheckDays[$i]['checkDayTme'][$j]);
                     @endphp
                     @if($reserved->isNotEmpty() || $stop_days->isNotEmpty()) {{--空でなかったらTrue--}}
                         @if(!is_null($reserveInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                 @if($reserveInfo->menu_id ==  \Constant::CUT_SHAMPOO || $reserveInfo->menu_id ==  \Constant::CUT_SHAVING )
-                                    @if($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:30:00' )
+                                    @if($reserveInfo->start_date <= $weekCheckDays[$i]['checkDayTme'][19])
                                      <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                     @endif
                                     @php $j += 1; @endphp 
                                 @endif
                                 @if($reserveInfo->menu_id == \Constant::CUT_SHAMPOO_SHAVING )
-                                    @if($reserveInfo->start_date == $week[$i]['checkDay']." ".'19:30:00' )
+                                    @if($reserveInfo->start_date == $weekCheckDays[$i]['checkDayTme'][19] )
                                         <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
-                                    @elseif($reserveInfo->start_date <= $week[$i]['checkDay']." ".'19:00:00' )
+                                    @elseif($reserveInfo->start_date <= $weekCheckDays[$i]['checkDayTme'][18] )
                                         <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                         <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">予約済</div>
                                     @endif
@@ -37,16 +37,16 @@
                             @endif                            
                         @elseif(!is_null($stopDaysInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center">
-                                <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" checked>
+                                <input type="checkbox" name="start_date[]" value="{{ $weekCheckDays[$i]['checkDayTme'][$j] }}" checked>
                             </div>
                         @else
                             <div class="py-1 px-2 border  border-blue-200 text-center ">
-                                <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" >
+                                <input type="checkbox" name="start_date[]" value="{{ $weekCheckDays[$i]['checkDayTme'][$j] }}" >
                             </div>
                         @endif
                     @else
                         <div class="py-1 px-2 border  border-blue-200 text-center underline">
-                            <input type="checkbox" name="start_date[]" value="{{$week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j]}}" >
+                            <input type="checkbox" name="start_date[]" value="{{ $weekCheckDays[$i]['checkDayTme'][$j] }}" >
                         </div>
                     @endif
                 @endfor
