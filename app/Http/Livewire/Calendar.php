@@ -22,8 +22,6 @@ class Calendar extends Component
     public $checkTime;
     public $weekCheckDays;
 
-
-
     //画面を読み込んだときの初期値
     public function mount()
     {
