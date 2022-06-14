@@ -20,6 +20,8 @@ class Calendar extends Component
     public $reserved;
     public $stop_days;
     public $checkTime;
+    public $weekCheckDays;
+
 
 
     //画面を読み込んだときの初期値
@@ -36,7 +38,7 @@ class Calendar extends Component
             array_push($this->week,[
                 'day' => $this->day,
                 'checkDay' => $this->checkDay,
-                'dayOfWeek' => $this->dayOfWeek
+                'dayOfWeek' => $this->dayOfWeek,
                 ]
             );
         }
@@ -45,16 +47,23 @@ class Calendar extends Component
         $this->reserved = Reserve::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->get();
-      
+
         $this->checkTimes = [];
         for($i = 0; $i < 7; $i++){
             for($j =0; $j < 21; $j++){
-                $this->checkTimes[$i][] = $this->week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j];
+             $this->checkTimes[$i][] = $this->week[$i]['checkDay']." ".\Constant::RESERVE_TIME[$j];
             }
+        }
+
+        $this->weekCheckDays = [];
+        for($i = 0; $i < 7; $i++){
+            $this->weekCheckDays[$i]['checkDayTme'] =  $this->checkTimes[$i];
+            $this->weekCheckDays[$i] += $this->week[$i];
         }
 
         $this->stop_days = ReserveStopDay::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
+        ->whereNull('deleted_at')
         ->get();
     }
     
