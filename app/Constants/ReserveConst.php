@@ -32,4 +32,9 @@ class ReserveConst
   const CUT_SHAMPOO = 2;
   const CUT_SHAVING = 3;
   const CUT_SHAMPOO_SHAVING = 4;
+  
+  const CUT_NAME = 'カット';
+  const CUT_SHAMPOO_NAME = 'カット＋シャンプー';
+  const CUT_SHAVING_NAME = 'カット＋シェービング'	;
+  const CUT_SHAMPOO_SHAVING_NAME = 'カット＋シャンプー＋シェービング';
 }
