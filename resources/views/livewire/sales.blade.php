@@ -1,5 +1,10 @@
 
 <div>
+    <div class="m-3 flex flex-row-reverse">
+        <input id="" class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
+        value="{{ $today }}" wire:change="getDate($event.target.value)"/>
+    </div>
+
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">

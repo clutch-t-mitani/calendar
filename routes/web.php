@@ -20,12 +20,8 @@ use App\Http\Controllers\ReservationManagementController;
 
 Route::middleware('can:user-higher')->group( function() {
     Route::controller(ReservationController::class)->group (function () {
-        // Route::get('/calendar/{id}', 'show')->name('show');
         Route::post('/calendar/store', 'store')->name('store');
     });
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 });
 
 Route::controller(HomeController::class)->group (function () {
@@ -43,6 +39,7 @@ Route::middleware('can:manager-higher')->group(function() {
         //一覧画面表示
         Route::get('/manager/index', 'index')->name('manager.index');
         Route::get('/manager/past', 'past')->name('manager.past');
+        Route::get('/manager/sales', 'sales')->name('manager.sales');
         Route::post('/manager/delete', 'delete')->name('manager.delete');
         Route::get('/manager/day_management/', 'day_management')->name('manager.day_management');
         Route::post('/manager/reserve_stop', 'reserve_stop')->name('manager.reserve_stop');
@@ -54,9 +51,9 @@ Route::controller(LivewireTestController::class)->prefix('livewire-test')->group
     Route::get('/index', 'index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Route::get('/manager/sales', function () {
+//     return view('dashboard');
+// });
 
 
 // Route::get('/', function () {

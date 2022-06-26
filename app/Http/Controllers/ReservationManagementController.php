@@ -80,7 +80,6 @@ class ReservationManagementController extends Controller
             DB::transaction(function() use($days){
                 ReserveStopDay::query()->delete();
                 foreach($days['start_date'] as $day){
-                    // dd($day,CarbonImmutable::parse($day)->addMinutes(30));
                     $stop_days = new ReserveStopDay();
                     $stop_days->start_date = $day;
                     $stop_days->end_date = CarbonImmutable::parse($day)->addMinutes(30);
@@ -89,5 +88,10 @@ class ReservationManagementController extends Controller
             });
         }
         return redirect('/manager/day_management');   
+    }
+
+    public function sales()
+    {
+        return view('manager.sales');
     }
 }
