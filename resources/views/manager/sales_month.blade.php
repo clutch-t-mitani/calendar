@@ -13,7 +13,7 @@
                     <div class="m-3 flex flex-row-reverse">
                         <form method="get" action="{{ route('manager.month') }}">
                             <input class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
-                            value="{{ $this_month_sales['month'] }}"/>
+                            value="{{ $sales['month'] }}"/>
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索</button>
                         </form>
                     </div>
@@ -37,14 +37,14 @@
                                         <tbody>
                                             <tr class="border-b">
                                                 <td class="py-1 whitespace-nowrap font-medium text-gray-900 border-double border-2 border-gray-600 bg-slate-200">月合計</td>
-                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $this_month_sales['total']['count_menu'][\Constant::CUT] }}</td>
-                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $this_month_sales['total']['count_menu'][\Constant::CUT_SHAMPOO] }}</td>
-                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $this_month_sales['total']['count_menu'][\Constant::CUT_SHAVING] }}</td>
-                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $this_month_sales['total']['count_menu'][\Constant::CUT_SHAMPOO_SHAVING] }}</td>
-                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $this_month_sales['total']['sum_people'] }}</td>
-                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">¥{{ number_format($this_month_sales['total']['sum_price']) }}</td>
+                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $sales['total']['count_menu'][\Constant::CUT] }}</td>
+                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $sales['total']['count_menu'][\Constant::CUT_SHAMPOO] }}</td>
+                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $sales['total']['count_menu'][\Constant::CUT_SHAVING] }}</td>
+                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $sales['total']['count_menu'][\Constant::CUT_SHAMPOO_SHAVING] }}</td>
+                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $sales['total']['sum_people'] }}</td>
+                                                <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">¥{{ number_format($sales['total']['sum_price']) }}</td>
                                             </tr>
-                                            @foreach ($this_month_sales['date'] as $reserve)
+                                            @foreach ($sales['date'] as $reserve)
                                             <tr class="border-b">
                                                 <td class="py-1 whitespace-nowrap font-medium text-gray-900 border-r">{{ $reserve['day'] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT] }}</td>

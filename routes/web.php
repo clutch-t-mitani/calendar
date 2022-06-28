@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LivewireTestController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationManagementController;
+use App\Http\Controllers\SalesController;
 
 
 /*
@@ -39,11 +40,16 @@ Route::middleware('can:manager-higher')->group(function() {
         //一覧画面表示
         Route::get('/manager/index', 'index')->name('manager.index');
         Route::get('/manager/past', 'past')->name('manager.past');
-        Route::get('/manager/sales', 'sales')->name('manager.sales');
         Route::post('/manager/delete', 'delete')->name('manager.delete');
         Route::get('/manager/day_management/', 'day_management')->name('manager.day_management');
         Route::post('/manager/reserve_stop', 'reserve_stop')->name('manager.reserve_stop');
     });
+
+    Route::controller(SalesController::class)->group (function () {
+        Route::get('/manager/sales', 'index')->name('manager.sales');
+        Route::get('/manager/sales/month', 'show')->name('manager.month');
+    });
+
 });
 
 

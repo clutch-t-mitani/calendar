@@ -1,8 +1,15 @@
 
 <div>
-    <div class="m-3 flex flex-row-reverse">
+    {{-- <div class="m-3 flex flex-row-reverse">
         <input id="" class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
         value="{{ $today }}" wire:change="getDate($event.target.value)"/>
+    </div> --}}
+    <div class="m-3 flex flex-row-reverse">
+        {{-- <form method="get" action="{{ route('manager.month') }}"> --}}
+            <input  class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
+            value="" wire:click="getDate($date)" />
+            <button type="submit" > 検索 </button>
+        {{-- </form> --}}
     </div>
 
     <div class="flex flex-col">

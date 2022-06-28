@@ -90,8 +90,5 @@ class ReservationManagementController extends Controller
         return redirect('/manager/day_management');   
     }
 
-    public function sales()
-    {
-        return view('manager.sales');
-    }
+
 }
