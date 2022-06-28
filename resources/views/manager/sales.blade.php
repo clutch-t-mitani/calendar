@@ -14,7 +14,8 @@
                         <form method="get" action="{{ route('manager.month') }}">
                             <input class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
                             value="{{ $this_month_sales['month'] }}"/>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索</button>
+                            {{-- <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索</button> --}}
+                            <button type="submit" onClick="return isCheck();return false;" class="px-2 py-1 bg-blue-400 text-base text-white font-semibold rounded hover:bg-blue-500">検索</button>
                         </form>
                     </div>
                     {{-- @livewire('sales')  --}}
