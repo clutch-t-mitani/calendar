@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Reserve;
 use App\Constants\ReserveConst;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -24,7 +24,6 @@ class Sales extends Component
     public $date_reserves;
     public $total;
 
-    
 
     public function mount()
     {
@@ -57,9 +56,9 @@ class Sales extends Component
             \Constant::CUT_SHAVING => 0,
             \Constant::CUT_SHAMPOO_SHAVING => 0,
         ];
-        
+
         $this->date_reserves = [];
-        for ($i=0; $i < count($this->dates) ; $i++) { 
+        for ($i=0; $i < count($this->dates) ; $i++) {
             $this->date_reserves[$this->check_dates[$i]]['day'] = $this->dates[$i] ;
             $this->date_reserves[$this->check_dates[$i]]['count_menu'] = $count_menu  ;
             $this->date_reserves[$this->check_dates[$i]]['sum_people'] = 0  ;
@@ -69,7 +68,7 @@ class Sales extends Component
         foreach ($this->reserved as $value) {
             if(array_key_exists(substr($value->start_date,0,10),$this->date_reserves)){
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][$value->menu_id] += 1;
-                $this->date_reserves[substr($value->start_date,0,10)]['sum_people']  = 
+                $this->date_reserves[substr($value->start_date,0,10)]['sum_people']  =
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][\Constant::CUT] +
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][\Constant::CUT_SHAMPOO] +
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][\Constant::CUT_SHAVING] +
@@ -91,7 +90,7 @@ class Sales extends Component
             $this->total['count_menu'][\Constant::CUT_SHAMPOO_SHAVING] += $reserve['count_menu'][\Constant::CUT_SHAMPOO_SHAVING];
             $this->total['sum_people'] += $reserve['sum_people'];
             $this->total['sum_price'] += $reserve['sum_price'];
-        }        
+        }
     }
 
     public function getDate($date)
@@ -125,9 +124,9 @@ class Sales extends Component
             \Constant::CUT_SHAVING => 0,
             \Constant::CUT_SHAMPOO_SHAVING => 0,
         ];
-        
+
         $this->date_reserves = [];
-        for ($i=0; $i < count($this->dates) ; $i++) { 
+        for ($i=0; $i < count($this->dates) ; $i++) {
             $this->date_reserves[$this->check_dates[$i]]['day'] = $this->dates[$i] ;
             $this->date_reserves[$this->check_dates[$i]]['count_menu'] = $count_menu  ;
             $this->date_reserves[$this->check_dates[$i]]['sum_people'] = 0  ;
@@ -137,7 +136,7 @@ class Sales extends Component
         foreach ($this->reserved as $value) {
             if(array_key_exists(substr($value->start_date,0,10),$this->date_reserves)){
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][$value->menu_id] += 1;
-                $this->date_reserves[substr($value->start_date,0,10)]['sum_people']  = 
+                $this->date_reserves[substr($value->start_date,0,10)]['sum_people']  =
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][\Constant::CUT] +
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][\Constant::CUT_SHAMPOO] +
                 $this->date_reserves[substr($value->start_date,0,10)]['count_menu'][\Constant::CUT_SHAVING] +
@@ -159,7 +158,7 @@ class Sales extends Component
             $this->total['count_menu'][\Constant::CUT_SHAMPOO_SHAVING] += $reserve['count_menu'][\Constant::CUT_SHAMPOO_SHAVING];
             $this->total['sum_people'] += $reserve['sum_people'];
             $this->total['sum_price'] += $reserve['sum_price'];
-        }        
+        }
         // dd($this->total);
 
     }

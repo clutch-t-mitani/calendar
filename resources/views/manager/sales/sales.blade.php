@@ -45,9 +45,9 @@
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $this_month_sales['total']['sum_people'] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">¥{{ number_format($this_month_sales['total']['sum_price']) }}</td>
                                             </tr>
-                                            @foreach ($this_month_sales['date'] as $reserve)
+                                            @foreach ($this_month_sales['date'] as $day => $reserve)
                                             <tr class="border-b">
-                                                <td class="py-1 whitespace-nowrap font-medium text-gray-900 border-r">{{ $reserve['day'] }}</td>
+                                                <td class="py-1 whitespace-nowrap font-medium text-gray-900 border-r underline"><a href="{{ route('manager.daily',['date' => $day ]) }}">{{ $reserve['day'] }}</a></td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT_SHAMPOO] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT_SHAVING] }}</td>

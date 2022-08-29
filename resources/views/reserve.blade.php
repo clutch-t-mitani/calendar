@@ -30,7 +30,7 @@
                     @if($menu->id == \Constant::CUT || $menu->id == \Constant::CUT_SHAMPOO || $menu->id == \Constant::CUT_SHAVING )
                       <td class="border px-4 py-2">
                         <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == \Constant::CUT)checked @endif>
-                      </td>                        
+                      </td>
                     @else
                       <td class="border px-4 py-2">予約不可</td>
                     @endif
@@ -38,7 +38,10 @@
                     @if($menu->id == \Constant::CUT)
                       <td class="border px-4 py-2">
                         <input type="radio" name="menu_id" value="{{ $menu->id }}" @if($menu->id == \Constant::CUT)checked @endif>
-                      </td>                        
+                      </td>
+                    @error('status')
+                        <div class="text-red-600">{{ $message }}</div>
+                    @enderror
                     @else
                       <td class="border px-4 py-2">予約不可</td>
                     @endif
@@ -60,11 +63,11 @@
                   </tr>
                 @endforeach
               </tbody>
-            </table>  
+            </table>
             <input type="hidden" name="time" value={{ str_replace(' ', '/', $check_day) }} >
             <div class="m-3 flex flex-row-reverse">
               <button type="submit" onClick="return isCheck()" class="px-2 py-1 bg-blue-400 text-base text-white font-semibold rounded hover:bg-blue-500 ">予約する</button>
-            </div>        
+            </div>
           </form>
         </div>
       </div>
@@ -77,11 +80,11 @@
   function isCheck() {
       var arr_checkBoxes = document.getElementsByClassName("check");
 
-      if(window.confirm('予約を決定しますか？')){ 
-          window.alert('予約を受け付けました'); 
-          return true; 
-      }else{ 
-          return false; 
-      } 
+      if(window.confirm('予約を決定しますか？')){
+          window.alert('予約を受け付けました');
+          return true;
+      }else{
+          return false;
+      }
   }
 </script>

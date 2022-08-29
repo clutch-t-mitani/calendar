@@ -59,12 +59,14 @@ class Calendar extends Component
             $this->weekCheckDays[$i] += $this->week[$i];
         }
 
+        // dd( $this->weekCheckDays);
+
         $this->stop_days = ReserveStopDay::
         whereBetween('start_date',[$this->today,$this->sevenDaysLater])
         ->whereNull('deleted_at')
         ->get();
     }
-    
+
 
     public function getWeekReserved()
     {

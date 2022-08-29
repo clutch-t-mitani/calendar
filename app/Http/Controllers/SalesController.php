@@ -20,7 +20,8 @@ class SalesController extends Controller
     {
         $sales = new Sales;
         $this_month_sales = $sales->mount();
-        return view('manager.sales',compact('this_month_sales'));
+        // dd($this_month_sales);
+        return view('manager.sales.sales',compact('this_month_sales'));
     }
 
 
@@ -30,7 +31,37 @@ class SalesController extends Controller
         $sales = new Sales;
         $sales = $sales->getDate($month['calendar']);
 
-        return view('manager.sales_month',compact('sales'));
+        return view('manager.sales.sales_month',compact('sales'));
+
+    }
+
+    public function daily($date) 
+    {
+
+        $day = CarbonImmutable::parse($date);
+
+        $reserves = Reserve::leftJoin('menus','menu_id','=','menus.id')
+        ->select('reserves.id', 'reserves.start_date', 'reserves.end_date','users.name as user_name','users.email','menus.name as menu_name','menus.price')
+        ->leftJoin('users','user_id','=','users.id')
+        ->whereDate('start_date',$day)
+        ->orderBy('start_date','ASC')
+        ->get();
+
+        // dd($reserves);
+
+        $day_of_week = ['日','月','火','水','木','金','土'];
+
+        $sales = new Sales;
+        $sales = $sales->getDate($date);
+        
+        $day_sales = new Sales;
+        $day_sales = $day_sales->getDailyDate($date);
+
+        dd($sales,$day_sales);
+
+
+        return view('manager.sales.daily',compact('reserves','day_of_week'));
+
 
     }
 }

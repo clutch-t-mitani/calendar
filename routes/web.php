@@ -6,6 +6,8 @@ use App\Http\Controllers\LivewireTestController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationManagementController;
 use App\Http\Controllers\SalesController;
+use Illuminate\Support\Facades\Log;
+
 
 
 /*
@@ -28,6 +30,7 @@ Route::middleware('can:user-higher')->group( function() {
 Route::controller(HomeController::class)->group (function () {
     //一覧画面表示
     Route::get('/', 'index')->name('index');
+
 });
 
 Route::controller(ReservationController::class)->group (function () {
@@ -48,6 +51,8 @@ Route::middleware('can:manager-higher')->group(function() {
     Route::controller(SalesController::class)->group (function () {
         Route::get('/manager/sales', 'index')->name('manager.sales');
         Route::get('/manager/sales/month', 'show')->name('manager.month');
+        Route::get('/manager/sales/{date}', 'daily')->name('manager.daily');
+
     });
 
 });

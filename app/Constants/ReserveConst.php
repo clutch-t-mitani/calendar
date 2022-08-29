@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace app\Constants;
 
@@ -27,14 +27,22 @@ class ReserveConst
     '19:30:00',
     '20:00:00',
   ];
-  
+
   const CUT = 1;
   const CUT_SHAMPOO = 2;
   const CUT_SHAVING = 3;
   const CUT_SHAMPOO_SHAVING = 4;
-  
+
   const CUT_NAME = 'カット';
   const CUT_SHAMPOO_NAME = 'カット＋シャンプー';
   const CUT_SHAVING_NAME = 'カット＋シェービング'	;
   const CUT_SHAMPOO_SHAVING_NAME = 'カット＋シャンプー＋シェービング';
+
+  public const MENU_STATUS_ARRAY = [
+    self::CUT,
+    self::CUT_SHAMPOO,
+    self::CUT_SHAVING,
+    self::CUT_SHAMPOO_SHAVING,
+];
+
 }

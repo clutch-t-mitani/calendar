@@ -19,8 +19,8 @@
                             @if($reserveInfo->menu_id == \Constant::CUT_SHAMPOO || $reserveInfo->menu_id == \Constant::CUT_SHAVING)
                               @if($reserveInfo->start_date <= $Day['checkDayTme'][19] )
                                 <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">×</div>
-                                @php $j += 1; @endphp 
-                              @endif  
+                                @php $j += 1; @endphp
+                              @endif
                             @endif
                             @if($reserveInfo->menu_id == \Constant::CUT_SHAMPOO_SHAVING )
                                 @if($reserveInfo->start_date == $Day['checkDayTme'][19]  )
@@ -29,18 +29,19 @@
                                     <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">×</div>
                                     <div class="py-1 px-2 border border-blue-200 text-center bg-gray-200">×</div>
                                 @endif
-                                @php $j += 2; @endphp 
-                            @endif                            
+                                @php $j += 2; @endphp
+                            @endif
                     @elseif(!is_null($stopDaysInfo))
                             <div class="py-1 px-2 border border-blue-200 text-center ">受付不可</div>
                     @else
                         <div class="py-1 px-2 border  border-blue-200 text-center underline">
-                            <a href="{{ route('show',['id' => $Day['checkDayTme'][$j] ]) }}">○</a>
+                            {{-- <a href="{{ route('show',['id' => $Day['checkDayTme'][$j] ]) }}">○</a> --}}
+                            <button onclick="location.href='{{ route('show',['id' => $Day['checkDayTme'][$j] ]) }}'" class="underline">○</button>
                         </div>
                     @endif
                 @else
                  <div class="py-1 px-2 border  border-blue-200 text-center underline">
-                    <a href="{{ route('show',['id' => $Day['checkDayTme'][$j] ]) }}">○</a>
+                    <button onclick="location.href='{{ route('show',['id' => $Day['checkDayTme'][$j] ]) }}'" class="underline">○</button>
                  </div>
                 @endif
             @endfor
