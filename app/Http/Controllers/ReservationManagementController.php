@@ -7,7 +7,7 @@ use App\Models\ReserveStopDay;
 use Illuminate\Support\Facades\Auth; //ユーザID登録するために必要
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 
 class ReservationManagementController extends Controller
 {
@@ -45,7 +45,7 @@ class ReservationManagementController extends Controller
     {
         $cancel_reserves = $request->all();
         $cancel_ids = $cancel_reserves['id'] ;
-      
+
         foreach($cancel_ids as $cancel_id){
          Reserve::where('id',$cancel_id)->delete();
         }
@@ -87,7 +87,7 @@ class ReservationManagementController extends Controller
                 }
             });
         }
-        return redirect('/manager/day_management');   
+        return redirect('/manager/day_management');
     }
 
 

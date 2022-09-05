@@ -52,11 +52,8 @@ Route::middleware('can:manager-higher')->group(function() {
         Route::get('/manager/sales', 'index')->name('manager.sales');
         Route::get('/manager/sales/month', 'show')->name('manager.month');
         Route::get('/manager/sales/{date}', 'daily')->name('manager.daily');
-
     });
-
 });
-
 
 Route::controller(LivewireTestController::class)->prefix('livewire-test')->group(function(){
     Route::get('/index', 'index');

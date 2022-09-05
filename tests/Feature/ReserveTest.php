@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\Reserve;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,6 +26,7 @@ class ReserveTest extends TestCase
         $response = $this->actingAs($user)->get("/calendar/2022-08-18%2010:00:00");
         // $response->assertStatus(200);
         $response->assertStatus(Response::HTTP_OK);
+
     }
 
     // ログインしていないユーザがカレンダー予約画面にアクセスできないこと(リダイレクトされる)
@@ -43,30 +45,104 @@ class ReserveTest extends TestCase
         $response->assertStatus(302);
     }
 
-    //正しいメニューIDで予約が行える事
-    public function test_reserve_store_ok()
+    // //正しいメニューIDで予約が行える事
+    // public function test_reserve_store_ok()
+    // {
+    //     $this->withoutExceptionHandling();
+
+    //     $user = User::factory()->create(['role' => 9]);
+    //     // $reserve = Reserve::factory()->create(['user_id' => $user->id]);
+
+    //     // $param = [
+    //     //     'id' => $reserve->id,
+    //     //     'user_id' => $user->id,
+    //     //     'menu_id' => $reserve->menu_id,
+    //     //     'start_date' => $reserve->start_date,
+    //     //     'end_date' => $reserve->end_date,
+    //     //     'reserve_type' => 1,
+    //     // ];
+
+
+    //     $param = [
+    //         'menu_id' => 4,
+    //         'time1dada' => 'aaaaaaaaa',
+    //     ];
+
+    //     $result = [
+    //         'menu_id' => 1,
+    //         'start_date' => '2022-11-15 09:00:00',
+    //         'end_date' => '2022-11-15 09:30:00',
+    //         'reserve_type' => 1,
+    //     ];
+
+    //     $response = $this->actingAs($user)->post("/calendar/store",$param);
+    //     $response->assertRedirect('/');
+    //     $response->assertStatus(302);
+
+    //     // $this->assertDatabaseHas('reserves',$result);//dbに値があること（更新された）
+
+    // }
+
+    // ユーザー権限のアカウントでログインしているユーザが予約管理画面にアクセスできないこと
+    public function test_manager_index_ng()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => 9]);
+        $response = $this->actingAs($user)->get("/manager/index");
+        $response->assertStatus(403);
+    }
 
-        $param = [
-            'menu_id' => 2,
-            'time' => "2022-09-04/10:00:00",
-        ];
-
-        $param1 = [
-            'user_id' =>  $user->id,
-            'menu_id' => 2,
-            'start_date' => "2022-09-04 10:00:00",
-            'end_date' => "2022-09-04 11:00:00",
-            'reserve_type' => 1,
-        ];
-
-        $response = $this->actingAs($user)->post("/calendar/store",$param);
-        $response->assertStatus(302);
-
-        // $response->assertRedirect('/');
-        // $this->assertDatabaseHas('reserves',$param1);//dbに値があること（更新された）
+    //マネージャー権限でログインしているユーザが予約管理画面にアクセスできる(200)
+    public function test_manager_index()
+    {
+        $user = User::factory()->create(['role' => 5]);
+        $response = $this->actingAs($user)->get("/manager/index");
+        $response->assertStatus(200);
 
     }
+
+    // マネージャー権限でログインしているユーザが予約をキャンセルできる
+    public function test_Reserve_cancel_ok()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->create(['role' => 5]);
+        $reserve = Reserve::factory()->create(['user_id' => $user->id]);
+
+        $param['id'] = [$reserve->id];
+        $response = $this->actingAs($user)->post("/manager/delete/",$param);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+    }
+
+        // マネージャー権限でログインしているユーザが予約を複数キャンセルできる
+        public function test_Reserves_cancel_ok()
+        {
+            $user = User::factory()->create(['role' => 5]);
+            $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
+
+            foreach ($reserves as $key => $reserve) {
+                $params['id'][] = $reserve->id;
+            }
+            $response = $this->actingAs($user)->post("/manager/delete/",$params);
+
+            $response->assertStatus(302);
+            $response->assertRedirect('/');
+        }
+
+        // ユーザ権限でログインしているユーザが予約をキャンセルできない
+        public function test_Reserves_cancel_user_ng()
+        {
+            $user = User::factory()->create(['role' => 9]);
+            $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
+
+            foreach ($reserves as $key => $reserve) {
+                $params['id'][] = $reserve->id;
+            }
+            $response = $this->actingAs($user)->post("/manager/delete/",$params);
+
+            $response->assertStatus(Response::HTTP_FORBIDDEN);
+            // $response->assertRedirect('/');
+        }
 
 }
