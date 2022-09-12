@@ -12,12 +12,21 @@ use Illuminate\Http\Response;
 class ReserveTest extends TestCase
 {
     use WithFaker;
+    // テスト実行ごとにDBをリフレッシュ
+    use RefreshDatabase;
 
     /**
      * A basic feature test example.
      *
      * @return void
      */
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed('MenuSeeder');
+
+    }
 
     //ログインユーザーがカレンダー予約画面にログインできること(200)
     public function test_calendar_index_ok()
@@ -46,42 +55,28 @@ class ReserveTest extends TestCase
     }
 
     // //正しいメニューIDで予約が行える事
-    // public function test_reserve_store_ok()
-    // {
-    //     $this->withoutExceptionHandling();
+    public function test_reserve_store_ok()
+    {
+        $user = User::factory()->create(['role' => 9]);
+        $param = [
+            'menu_id' => 1,
+            'time' => '2022-09-20/15:00:00'
+        ];
 
-    //     $user = User::factory()->create(['role' => 9]);
-    //     // $reserve = Reserve::factory()->create(['user_id' => $user->id]);
+        $result = [
+            'user_id' => $user->id,
+            'menu_id' => 1,
+            'start_date' => '2022-09-20 15:00:00',
+            'end_date' => '2022-09-20 15:30:00',
+            'reserve_type' => 1,
+        ];
 
-    //     // $param = [
-    //     //     'id' => $reserve->id,
-    //     //     'user_id' => $user->id,
-    //     //     'menu_id' => $reserve->menu_id,
-    //     //     'start_date' => $reserve->start_date,
-    //     //     'end_date' => $reserve->end_date,
-    //     //     'reserve_type' => 1,
-    //     // ];
+        $response = $this->actingAs($user)->post("/calendar/store",$param);
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
 
-
-    //     $param = [
-    //         'menu_id' => 4,
-    //         'time1dada' => 'aaaaaaaaa',
-    //     ];
-
-    //     $result = [
-    //         'menu_id' => 1,
-    //         'start_date' => '2022-11-15 09:00:00',
-    //         'end_date' => '2022-11-15 09:30:00',
-    //         'reserve_type' => 1,
-    //     ];
-
-    //     $response = $this->actingAs($user)->post("/calendar/store",$param);
-    //     $response->assertRedirect('/');
-    //     $response->assertStatus(302);
-
-    //     // $this->assertDatabaseHas('reserves',$result);//dbに値があること（更新された）
-
-    // }
+        $this->assertDatabaseHas('reserves',$result);//dbに値があること（更新された）
+    }
 
     // ユーザー権限のアカウントでログインしているユーザが予約管理画面にアクセスできないこと
     public function test_manager_index_ng()
@@ -103,8 +98,6 @@ class ReserveTest extends TestCase
     // マネージャー権限でログインしているユーザが予約をキャンセルできる
     public function test_Reserve_cancel_ok()
     {
-        $this->withoutExceptionHandling();
-
         $user = User::factory()->create(['role' => 5]);
         $reserve = Reserve::factory()->create(['user_id' => $user->id]);
 
@@ -118,6 +111,7 @@ class ReserveTest extends TestCase
         // マネージャー権限でログインしているユーザが予約を複数キャンセルできる
         public function test_Reserves_cancel_ok()
         {
+            // $this->seed('MenuSeeder');
             $user = User::factory()->create(['role' => 5]);
             $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
 
@@ -133,6 +127,7 @@ class ReserveTest extends TestCase
         // ユーザ権限でログインしているユーザが予約をキャンセルできない
         public function test_Reserves_cancel_user_ng()
         {
+            // $this->seed('MenuSeeder');
             $user = User::factory()->create(['role' => 9]);
             $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
 
@@ -144,5 +139,4 @@ class ReserveTest extends TestCase
             $response->assertStatus(Response::HTTP_FORBIDDEN);
             // $response->assertRedirect('/');
         }
-
 }

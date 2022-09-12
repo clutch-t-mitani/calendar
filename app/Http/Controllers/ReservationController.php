@@ -58,6 +58,7 @@ class ReservationController extends Controller
 
     public function store(ReserveRequest $request)
     {
+        // dd($request->all());
         $start_time = Carbon::parse(str_replace('/', ' ', $request->time));
 
         if($request->menu_id == 1){

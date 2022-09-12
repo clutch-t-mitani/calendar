@@ -6,13 +6,13 @@
     </x-slot>
   
     <div class="py-8">
-  
+
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 bg-white border-b border-gray-200">
                     <div class="m-3 flex flex-row-reverse">
                         <form method="get" action="{{ route('manager.month') }}">
-                            <input class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
+                            <input class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar"
                             value="{{ $this_month_sales['month'] }}"/>
                             {{-- <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索</button> --}}
                             <button type="submit" onClick="return isCheck();return false;" class="px-2 py-1 bg-blue-400 text-base text-white font-semibold rounded hover:bg-blue-500">検索</button>
@@ -55,7 +55,7 @@
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['sum_people'] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">¥{{ number_format($reserve['sum_price']) }}</td>
                                             </tr>
-                                            @endforeach 
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

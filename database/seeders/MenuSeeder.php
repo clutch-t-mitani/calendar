@@ -19,6 +19,7 @@ class MenuSeeder extends Seeder
     {
         \DB::table('menus')->insert([
             [
+                'id' => 1,
                 'name' => 'カット',
                 'time' => '00:30:00',
                 'price' => 2700,
@@ -27,6 +28,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
+                'id' => 2,
                 'name' => 'カット＋シャンプー',
                 'time' => '01:00:00',
                 'price' => 3000,
@@ -35,6 +37,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
+                'id' => 3,
                 'name' => 'カット＋シェービング',
                 'time' => '01:00:00',
                 'price' => 3500,
@@ -43,6 +46,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
+                'id' => 4,
                 'name' => 'カット＋シャンプー＋シェービング',
                 'time' => '01:30:00',
                 'price' => 3800,
