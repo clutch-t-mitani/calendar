@@ -108,35 +108,76 @@ class ReserveTest extends TestCase
         $response->assertRedirect('/');
     }
 
-        // マネージャー権限でログインしているユーザが予約を複数キャンセルできる
-        public function test_Reserves_cancel_ok()
-        {
-            // $this->seed('MenuSeeder');
-            $user = User::factory()->create(['role' => 5]);
-            $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
+    // マネージャー権限でログインしているユーザが予約を複数キャンセルできる
+    public function test_Reserves_cancel_ok()
+    {
+        // $this->seed('MenuSeeder');
+        $user = User::factory()->create(['role' => 5]);
+        $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
 
-            foreach ($reserves as $key => $reserve) {
-                $params['id'][] = $reserve->id;
-            }
-            $response = $this->actingAs($user)->post("/manager/delete/",$params);
-
-            $response->assertStatus(302);
-            $response->assertRedirect('/');
+        foreach ($reserves as $key => $reserve) {
+            $params['id'][] = $reserve->id;
         }
+        $response = $this->actingAs($user)->post("/manager/delete/",$params);
 
-        // ユーザ権限でログインしているユーザが予約をキャンセルできない
-        public function test_Reserves_cancel_user_ng()
-        {
-            // $this->seed('MenuSeeder');
-            $user = User::factory()->create(['role' => 9]);
-            $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+    }
 
-            foreach ($reserves as $key => $reserve) {
-                $params['id'][] = $reserve->id;
-            }
-            $response = $this->actingAs($user)->post("/manager/delete/",$params);
+    // ユーザ権限でログインしているユーザが予約をキャンセルできない
+    public function test_Reserves_cancel_user_ng()
+    {
+        // $this->seed('MenuSeeder');
+        $user = User::factory()->create(['role' => 9]);
+        $reserves = Reserve::factory(3)->create(['user_id' => $user->id]);
 
-            $response->assertStatus(Response::HTTP_FORBIDDEN);
-            // $response->assertRedirect('/');
+        foreach ($reserves as $key => $reserve) {
+            $params['id'][] = $reserve->id;
         }
+        $response = $this->actingAs($user)->post("/manager/delete/",$params);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        // $response->assertRedirect('/');
+    }
+
+    //予約時間が重なった際、予約ができない
+    public function test_reserve_store_ng()
+    {
+        $user = User::factory()->create(['role' => 9]);
+        $param = [
+            'menu_id' => 1,
+            'time' => '2022-09-20/15:00:00'
+        ];
+
+        $result = [
+            'user_id' => $user->id,
+            'menu_id' => 1,
+            'start_date' => '2022-09-20 15:00:00',
+            'end_date' => '2022-09-20 15:30:00',
+            'reserve_type' => 1,
+        ];
+
+        $response = $this->actingAs($user)->post("/calendar/store",$param);
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+        $this->assertDatabaseHas('reserves',$result);//dbに値があること（更新された）
+
+        $param2 = [
+            'menu_id' => 2,
+            'time' => '2022-09-20/15:00:00'
+        ];
+
+        $result2 = [
+            'user_id' => $user->id,
+            'menu_id' => 2,
+            'start_date' => '2022-09-20 15:00:00',
+            'end_date' => '2022-09-20 15:30:00',
+            'reserve_type' => 1,
+        ];
+
+        $response = $this->actingAs($user)->post("/calendar/store",$param2);
+        $response->assertStatus(302);
+        $this->assertDatabaseMissing('reserves',$result2);//dbに値があること（更新された）
+
+    }
 }

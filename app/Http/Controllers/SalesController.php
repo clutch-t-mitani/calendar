@@ -10,7 +10,7 @@ use App\Models\ReserveStopDay;
 use Illuminate\Support\Facades\Auth; //ユーザID登録するために必要
 use Carbon\CarbonPeriod;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 
 
 class SalesController extends Controller
@@ -20,48 +20,41 @@ class SalesController extends Controller
     {
         $sales = new Sales;
         $this_month_sales = $sales->mount();
-        // dd($this_month_sales);
+
         return view('manager.sales.sales',compact('this_month_sales'));
     }
 
 
     public function show(Request $request)
-    {  
+    {
         $month = $request->all();
         $sales = new Sales;
         $sales = $sales->getDate($month['calendar']);
 
         return view('manager.sales.sales_month',compact('sales'));
 
+
     }
 
-    public function daily($date) 
+    public function daily($date)
     {
+        $daily_data = new Sales;
+        $daily_data = $daily_data->getDailyDate($date);
+        $to_select_day_data = new Sales;
+        $to_select_day_data = $to_select_day_data->toSelectDayGetDate($date)['to_select_day_total'];
 
-        $day = CarbonImmutable::parse($date);
+        $daily_data_total = $daily_data['daily_total'];
 
-        $reserves = Reserve::leftJoin('menus','menu_id','=','menus.id')
-        ->select('reserves.id', 'reserves.start_date', 'reserves.end_date','users.name as user_name','users.email','menus.name as menu_name','menus.price')
-        ->leftJoin('users','user_id','=','users.id')
-        ->whereDate('start_date',$day)
-        ->orderBy('start_date','ASC')
-        ->get();
+        foreach ($to_select_day_data as $menu_id => $value) {
+            $daily_data_total[$menu_id]['to_select_day_count'] = $to_select_day_data[$menu_id]['count'];
+            $daily_data_total[$menu_id]['to_select_day_price'] = $to_select_day_data[$menu_id]['price'];
+        }
 
-        // dd($reserves);
+        $day = CarbonImmutable::parse($daily_data['day']);
+        $today = $day->isoFormat('YYYY年MM月DD日(ddd)');
+        $reserves = $daily_data['reserves'];
 
-        $day_of_week = ['日','月','火','水','木','金','土'];
-
-        $sales = new Sales;
-        $sales = $sales->getDate($date);
-        
-        $day_sales = new Sales;
-        $day_sales = $day_sales->getDailyDate($date);
-
-        dd($sales,$day_sales);
-
-
-        return view('manager.sales.daily',compact('reserves','day_of_week'));
-
+        return view('manager.sales.daily',compact('reserves','today','daily_data_total'));
 
     }
 }

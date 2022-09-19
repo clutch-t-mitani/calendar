@@ -38,6 +38,13 @@ class ReserveConst
   const CUT_SHAVING_NAME = 'カット＋シェービング'	;
   const CUT_SHAMPOO_SHAVING_NAME = 'カット＋シャンプー＋シェービング';
 
+  public static $menu_list = [
+    self::CUT => self::CUT_NAME,
+    self::CUT_SHAMPOO => self::CUT_SHAMPOO_NAME,
+    self::CUT_SHAVING => self::CUT_SHAVING_NAME,
+    self::CUT_SHAMPOO_SHAVING => self::CUT_SHAMPOO_SHAVING_NAME,
+  ];
+
   public const MENU_STATUS_ARRAY = [
     self::CUT,
     self::CUT_SHAMPOO,

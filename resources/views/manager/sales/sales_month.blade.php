@@ -4,15 +4,15 @@
             売上管理
         </h2>
     </x-slot>
-  
+
     <div class="py-8">
-  
+
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 bg-white border-b border-gray-200">
                     <div class="m-3 flex flex-row-reverse">
                         <form method="get" action="{{ route('manager.month') }}">
-                            <input class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar" 
+                            <input class=" shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outlineblock" type="month" name="calendar"
                             value="{{ $sales['month'] }}"/>
                             {{-- <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索</button> --}}
                             <button type="submit" onClick="return isCheck();return false;" class="px-2 py-1 bg-blue-400 text-base text-white font-semibold rounded hover:bg-blue-500">検索</button>
@@ -45,9 +45,9 @@
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">{{ $sales['total']['sum_people'] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-double border-2 border-gray-600">¥{{ number_format($sales['total']['sum_price']) }}</td>
                                             </tr>
-                                            @foreach ($sales['date'] as $reserve)
+                                            @foreach ($sales['date'] as $day => $reserve)
                                             <tr class="border-b">
-                                                <td class="py-1 whitespace-nowrap font-medium text-gray-900 border-r">{{ $reserve['day'] }}</td>
+                                                <td class="py-1 whitespace-nowrap font-medium text-gray-900 border-r underline"><a href="{{ route('manager.daily',['date' => $day ]) }}">{{ $reserve['day'] }}</a></td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT_SHAMPOO] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['count_menu'][\Constant::CUT_SHAVING] }}</td>
@@ -55,7 +55,7 @@
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">{{ $reserve['sum_people'] }}</td>
                                                 <td class="text-gray-900 py-1 font-light whitespace-nowrap border-r">¥{{ number_format($reserve['sum_price']) }}</td>
                                             </tr>
-                                            @endforeach 
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
