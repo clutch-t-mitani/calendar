@@ -19,7 +19,7 @@ class SalesController extends Controller
     public function index()
     {
         $sales = new Sales;
-        $this_month_sales = $sales->mount();
+        $this_month_sales = $sales->getMonthDate(null);
 
         return view('manager.sales.sales',compact('this_month_sales'));
     }
@@ -29,10 +29,9 @@ class SalesController extends Controller
     {
         $month = $request->all();
         $sales = new Sales;
-        $sales = $sales->getDate($month['calendar']);
+        $sales = $sales->getMonthDate($month['calendar']);
 
         return view('manager.sales.sales_month',compact('sales'));
-
 
     }
 
